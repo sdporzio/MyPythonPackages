@@ -24,6 +24,7 @@ fluxCorrFactorICARUS = pow(distanceUBOONE,2)/float(pow(distanceICARUS,2))
 def EventRate_Nu2MuPi(nuMass,nuTheta2,POT):
     # Store current working directory
     pwd = os.path.dirname(__file__)
+    # Get the flux file from the current directory
     flux = np.genfromtxt(pwd+"/BnbNuFlux/flux_numu.dat",\
                          delimiter=" ",skip_header=1,names=True,dtype=None)
 
@@ -46,8 +47,8 @@ def EventRate_Nu2MuPi(nuMass,nuTheta2,POT):
         else: deltaE = flux['Energy'][i]-flux['Energy'][i-1]
         totalRate += rate[1][i]*deltaE
 
-    totalRateSBND = totalRate*volumeSBND*fluxCorrFactorSBND
-    totalRateUBOONE = totalRate*volumeUBOONE*fluxCorrFactorUBOONE
-    totalRateICARUS = totalRate*volumeICARUS*fluxCorrFactorICARUS
+    totalRateSBND = int(totalRate*volumeSBND*fluxCorrFactorSBND)
+    totalRateUBOONE = int(totalRate*volumeUBOONE*fluxCorrFactorUBOONE)
+    totalRateICARUS = int(totalRate*volumeICARUS*fluxCorrFactorICARUS)
 
     return totalRateSBND, totalRateUBOONE, totalRateICARUS
